@@ -60,9 +60,7 @@ class Config(BaseModel):
 
 
 USER_CONFIG_ENV_VAR = "ML_HACK_CLI_CONFIG"
-DEFAULT_USER_CONFIG_PATH = (
-    Path.home() / ".config" / "ml-hack" / "cli_agent_config.json"
-)
+DEFAULT_USER_CONFIG_PATH = Path.home() / ".config" / "ml-hack" / "cli_agent_config.json"
 SLACK_DEFAULT_DESTINATION = "slack.default"
 SLACK_DEFAULT_AUTO_EVENT_TYPES = ["approval_required", "error", "turn_complete"]
 

@@ -115,9 +115,7 @@ def loi_gen(
     Outputs both the text and a hash-deterministic deal-card export suitable
     for the Honey ledger lineage chain.
     """
-    raise NotImplementedError(
-        "loi_gen stub — firm template repo integration pending"
-    )
+    raise NotImplementedError("loi_gen stub — firm template repo integration pending")
 
 
 # ── Email blast ───────────────────────────────────────────────────────────────
@@ -205,7 +203,7 @@ def honey_inspect(
 
 def atlas_jobs(
     job_type: str,
-    target_host: str = "swarmrails",
+    target_host: str = "smash",
     config: dict[str, Any] | None = None,
     timeout_hours: int = 8,
 ) -> dict[str, Any]:
@@ -213,10 +211,22 @@ def atlas_jobs(
 
     GATED: requires explicit user approval. Cooks consume real GPU hours.
 
+    Default target is `smash` (RTX 5090 · 192.168.0.164) — the Hack-fleet primary
+    cook box. swarmrails (PRO 6000 ×2) is reserved for Atlas-tier (27B+).
+
+    Routing rules:
+      - cook_4b_hack       → smash       (4-8h on 5090)
+      - cook_9b            → smash       (12-24h on 5090, may need swarmrails)
+      - cook_27b           → swarmrails  (24-48h on PRO 6000)
+      - cook_70b_atlas     → swarmrails  (FSDP across both PRO 6000s, 50-72h)
+      - eval_180_prompt    → smash       (inference, ~30min)
+      - tribunal_grade     → swarmrails  (gemma3:12b + qwen2.5:32b on GPUs 0+1)
+      - deploy_vllm        → host-dependent (target host serves the endpoint)
+
     Args:
-        job_type: one of ["cook_4b_hack", "cook_9b", "cook_27b", "cook_70b_atlas",
-                          "eval_180_prompt", "tribunal_grade", "deploy_vllm"]
-        target_host: "swarmrails" (default) | "smash" | "vast" | "whale"
+        job_type: one of the routing rules above
+        target_host: "smash" (default · 192.168.0.164) | "swarmrails" (192.168.0.100) |
+                     "whale" | "vast"
         config: recipe-specific config (LR, batch, base model, corpus path)
         timeout_hours: minimum 4h for any cook · default scales by job_type
 
@@ -224,5 +234,6 @@ def atlas_jobs(
         {"job_id": str, "screen_name": str, "monitor_url": str}
     """
     raise NotImplementedError(
-        "atlas_jobs stub — dispatches via SSH to target_host; cook auditor cron handles monitoring"
+        "atlas_jobs stub — dispatches via SSH to target_host; "
+        "cook auditor cron handles monitoring"
     )

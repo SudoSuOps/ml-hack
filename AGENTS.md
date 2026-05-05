@@ -19,8 +19,8 @@ Notes:
 
 ML-Hack assumes you have access to the firm's compute and data infrastructure:
 
-- **swarmrails** @ 192.168.0.100 — primary cook box (2× RTX PRO 6000 96GB · Xeon w9-3475X · 256GB DDR5 · 3.6TB NVMe)
-- **smash** @ 192.168.0.164 — RTX 5090 32GB · Hack-tier cook + dial production
+- **swarmrails** @ 192.168.0.100 — primary cook box (2× RTX PRO 6000 96GB · Xeon w9-3475X · 256GB DDR5 · 3.6TB NVMe). User: `swarm`. Atlas-70B + 27B class cooks live here. Don't touch GPUs while a cook is in flight.
+- **smash** @ 192.168.0.164 — **RTX 5090 32GB · primary Hack-tier cook target.** User: `smash`. Ryzen 9 9950X3D 16C/32T · 60GB DDR5 · 1.8TB NVMe · Ubuntu 24.04. 4B QLoRA Hack cooks land here in 4-8h (vs swarmrails which is reserved for Atlas-tier 27B+). vast.ai-listed but ours; currently free for Hack-fleet.
 - **whale** — RTX 3090 Ti 24GB · currently rented via vast.ai
 - **Honey ledger** — `/data2/swarmdev/honey_ledger.db` on swarmrails (SQLite WAL · 7-table provenance chain)
 - **Hedera mainnet** — operator `0.0.10291827` · deed anchor topic `0.0.10291838`
